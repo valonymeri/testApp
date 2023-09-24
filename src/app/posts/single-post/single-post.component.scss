@@ -1,0 +1,18 @@
+
+.single-post {
+
+  .container {
+    p {
+      color: var(--textColorDark);
+    }
+
+    h5 {
+      color: var(--headerColorDark)
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

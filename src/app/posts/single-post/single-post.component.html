@@ -1,0 +1,27 @@
+<div class="single-post">
+    <div class="card error-card" *ngIf="(errorMessage$ | async)">
+        Error: {{ (errorMessage$ | async) }}
+    </div>
+    <div class="container "   >
+        <div class="mx-auto mt-5" *ngIf="!editMode">
+            <div class="card mx-auto" style="width: 18rem;">
+                <a class="go-back m-2" [routerLink]="'/posts'">Go Back</a>
+                <div class="card-body" *ngIf="(loading$ | async) === false; else loadingElement" >
+                    <h5 class="card-title">{{(singlePost$ |async)?.title || newPost.title}}</h5>
+                    <p class="card-text">{{(singlePost$ |async)?.body || newPost.body}}.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" (click)="editPost()">Edit</button>
+                    </div>
+                </div>
+                <ng-template #loadingElement>Loading...</ng-template>
+            </div>
+        </div>
+        <div *ngIf="editMode">
+        <app-edit-post
+                (update)="updatePost($event)"
+                (delete)="deletePost($event)"
+                [post]="singlePost$ | async"
+        ></app-edit-post>
+        </div>
+    </div>
+</div>

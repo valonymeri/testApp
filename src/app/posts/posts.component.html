@@ -1,0 +1,19 @@
+<div class="all-posts mt-5">
+    <div *ngIf="posts$ | async as postsData">
+       <div class="container" >
+           <div class="col-md-3 mb-5">
+               <button class="btn btn-primary" [routerLink]="'./add'">Add Post</button>
+           </div>
+           <div class="row" style="gap: 20px">
+           <div class="card" [routerLink]="[post.id]" *ngFor="let post of posts$ | async;" style="width: 18rem;">
+               <div class="card-body">
+                   <h5 class="card-title">Card title --> {{post.id}}</h5>
+                   <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                   <p class="card-text">{{post.title}}</p>
+               </div>
+           </div>
+           </div>
+        </div>
+    </div>
+</div>
+
