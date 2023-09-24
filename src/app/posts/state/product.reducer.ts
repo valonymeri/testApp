@@ -8,6 +8,7 @@ import {Post} from "../post.model";
 export interface PostState {
   loading: boolean;
   posts: Post[];
+  totalCount: number;
   singlePost: any,
   errormessage: string;
 }
@@ -18,6 +19,7 @@ export interface PostState {
 const initialState: PostState ={
   loading: false,
   posts: [],
+  totalCount: 0,
   singlePost: '',
   errormessage: ''
 }
@@ -90,12 +92,26 @@ export const postReducer = createReducer(
       loading: true,
       posts: [],
     })),
-    on(PostAPIActions.postsLoadedSuccess, (state, {post}) => {
+    on(PostAPIActions.postsLoadedSuccess, (state, {post, totalCount}) => {
       return {
         ...state,
         loading: false,
-        posts: post
+          posts: post,
+          totalCount: totalCount,
       };
+    }),
+
+    on(PostPageActions.searchPosts, (state) => ({
+        ...state,
+        loading: true,
+        posts: [],
+    })),
+    on(PostAPIActions.postsSearchSuccess, (state, {post}) => {
+        return {
+            ...state,
+            loading: false,
+            posts: post
+        };
     }),
 
   on(PostAPIActions.postLoadedFail, (state, {message}) =>({

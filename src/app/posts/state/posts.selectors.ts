@@ -16,6 +16,14 @@ export const selectPostLoading = createSelector(
   selectProductState,
   (postState) => postState.loading
 )
+
+/**
+ * Select total records
+ */
+export const selectTotalRecords = createSelector(
+    selectProductState,
+    (postState) => postState.totalCount
+)
 /**
  * Select single post.
  */

@@ -8,7 +8,8 @@ import {Posts} from "../posts.model";
 export const PostPageActions = createActionGroup({
   source: 'Products Page',
   events: {
-    'Load Posts': emptyProps,
+    'Load Posts': props<{ page: number; limit: number }>(),
+    'Search Posts': props<{keyword: string }>(),
     'Load Single Post':props<{id: any }>(),
     'Update Post': props<{post: Post }>(),
     'Delete Post': props<{id: number }>(),
@@ -24,7 +25,8 @@ export const PostPageActions = createActionGroup({
 export const PostAPIActions = createActionGroup({
   source: 'Products API',
   events:{
-    'Posts Loaded Success': props<{post: Post[]}>(),
+    'Posts Loaded Success': props<{post: Post[], totalCount: any}>(),
+    'Posts Search Success': props<{post: Post[]}>(),
     'Single Posts Loaded Success': props<{post: Post}>(),
     'Post Update Success': props<{post: Post}>(),
     'Post Delete Success': props<{id: number}>(),

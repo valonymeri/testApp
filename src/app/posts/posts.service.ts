@@ -16,10 +16,11 @@ export class PostsService{
   {}
 
 
+
   /**
    * Get All posts query.
    */
-  getAllPosts(): Observable<ApolloQueryResult<{ posts: any[] }>> {
+  searchAllPosts(keyword: any): Observable<ApolloQueryResult<{ posts: any[] }>> {
     const GET_POSTS = gql`
       query (
         $options: PageQueryOptions
@@ -29,9 +30,6 @@ export class PostsService{
             id
             title
           }
-          meta {
-            totalCount
-          }
         }
       }
       `
@@ -40,6 +38,33 @@ export class PostsService{
     }).valueChanges.pipe(catchError(this.handleError));
   };
 
+
+  /**
+   * Get All posts query.
+   */
+    getAllPosts(page: number, limit: number): Observable<ApolloQueryResult<{ posts: any[] }>> {
+    const GET_POSTS = gql`
+      query GetPosts($page: Int, $limit: Int) {
+        posts(options: { paginate: { page: $page, limit: $limit } }) {
+          data {
+            id
+            title
+          }
+            meta {
+            totalCount
+          }
+        }
+      }
+    `;
+
+    return this.apollo.watchQuery<any>({
+      query: GET_POSTS,
+      variables: {
+        page: page,
+        limit: limit,
+      },
+    }).valueChanges;
+  }
   /**
    * Get Single post by id.
    * @param id

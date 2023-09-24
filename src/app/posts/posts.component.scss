@@ -2,4 +2,14 @@
   .card{
     cursor: pointer;
   }
+  .posts{
+    gap:47px;
+  }
+  .page-link{
+    cursor: pointer;
+  }
+  .pagination-holder{
+    display: flex;
+    justify-content: flex-end;
+  }
 }

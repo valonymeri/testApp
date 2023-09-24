@@ -1,10 +1,15 @@
 <div class="all-posts mt-5">
-    <div *ngIf="posts$ | async as postsData">
-       <div class="container" >
+    <div >
+       <div class="container">
            <div class="col-md-3 mb-5">
                <button class="btn btn-primary" [routerLink]="'./add'">Add Post</button>
            </div>
-           <div class="row" style="gap: 20px">
+           <div class="input-group col-md-3 mb-5">
+
+               <input type="text" (keyup)="search($event)" class="form-control" placeholder="Search...">
+           </div>
+           <div class="row posts"   *ngIf="(loading$ | async) === false; else loadingElement">
+
            <div class="card" [routerLink]="[post.id]" *ngFor="let post of posts$ | async;" style="width: 18rem;">
                <div class="card-body">
                    <h5 class="card-title">Card title --> {{post.id}}</h5>
@@ -13,7 +18,19 @@
                </div>
            </div>
            </div>
+           <div class="pagination-holder p-3">
+               <nav aria-label="Page navigation example" >
+                   <ul class="pagination" >
+                       <li class="page-item" *ngFor="let page of totalPagesArray()">
+                           <a class="page-link" (click)="goToPage(page)">{{ page }}</a>
+                       </li>
+                   </ul>
+               </nav>
+           </div>
+           <ng-template #loadingElement>Loading...</ng-template>
         </div>
+
     </div>
+
 </div>
 
